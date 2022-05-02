@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.mad.e.twsplanningapp.model.Session
 
 @Composable
-fun SessionListItem(session: Session, selectedItem: (String) -> Unit) {
+fun SessionListItem(session: Session, selectedItem: (Session) -> Unit) {
     Card(
         modifier = Modifier
             .padding(10.dp)

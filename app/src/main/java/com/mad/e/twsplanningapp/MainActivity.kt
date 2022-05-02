@@ -18,13 +18,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mad.e.twsplanningapp.compose.SessionListItem
 import com.mad.e.twsplanningapp.data.SessionList
+import com.mad.e.twsplanningapp.model.Session
 
-class MainActivity : ComponentActivity() {
+class MainActivity(mockSession: Session) : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val mockSession = Session.getMockSession()
+        setContent {MainActivity(mockSession)}
         setContent {
             DisplaySessions() {
                 //Toast.makeText(this, it.name,Toast.LENGTH_LONG).show()
@@ -34,7 +38,13 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Preview
+@Composable
+fun DisplaySessionsPreview() {
+    val mockSession = Session.getMockSession()
+    MainActivity(mockSession)
 
+}
 @Composable
 fun ScrollableColumnDemo() {
     val scrollState = rememberScrollState()
@@ -56,7 +66,7 @@ fun LazyColumnDemo() {
     LazyColumn {
         items(100) {
             Text(
-                "User Name $it",
+                "Session $it",
                 style = MaterialTheme.typography.h3,
                 modifier = Modifier.padding(10.dp)
             )
@@ -69,7 +79,7 @@ fun LazyColumnDemo2(selectedItem: (String) -> (Unit)) {
     LazyColumn {
         items(100) {
             Text(
-                "User Name $it",
+                "Session $it",
                 style = MaterialTheme.typography.h3,
                 modifier = Modifier
                     .padding(10.dp)
@@ -81,7 +91,7 @@ fun LazyColumnDemo2(selectedItem: (String) -> (Unit)) {
 }
 
 @Composable
-fun DisplaySessions(selectedItem: (String) -> Unit) {
+fun DisplaySessions(selectedItem: (Session) -> Unit) {
 
     val sessions = remember { SessionList.sessions }
     LazyColumn(
